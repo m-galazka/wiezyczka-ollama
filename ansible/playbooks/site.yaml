@@ -1,0 +1,12 @@
+---
+- name: "Aktualizacja systemów operacyjnych"
+  hosts: all
+  become: true
+  gather_facts: true
+  serial:
+    - 1
+    - 2
+  max_fail_percentage: 25
+  roles:
+    - aktualizacja_systemu_operacyjnego
+  tags: aktualizacja_so

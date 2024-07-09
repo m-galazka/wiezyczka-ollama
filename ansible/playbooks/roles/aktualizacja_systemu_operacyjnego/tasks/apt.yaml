@@ -1,0 +1,11 @@
+---
+- name: "Aktualizacja systemu operacyjnego"
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: "Aktualizacja wszystkich pakietów do najnowszej wersji"
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+    update_cache: yes
