@@ -5,19 +5,19 @@ ungrouped:
       ansible_host: 192.168.0.100
       ansible_port: 22
       ansible_user: admin01
-    wiezyczka-ollama-pc-02:
-      ansible_host: 192.168.0.101
-      ansible_port: 22
-      ansible_user: admin02
-    wiezyczka-ollama-pc-03:
-      ansible_host: 192.168.0.102
-      ansible_port: 22
-      ansible_user: admin03
-    wiezyczka-ollama-pc-04:
-      ansible_host: 192.168.0.103
-      ansible_port: 22
-      ansible_user: admin04
-    wiezyczka-ollama-pc-05:
-      ansible_host: 192.168.0.104
-      ansible_port: 22
-      ansible_user: admin05
+    # wiezyczka-ollama-pc-02:
+    #   ansible_host: 192.168.0.101
+    #   ansible_port: 22
+    #   ansible_user: admin02
+    # wiezyczka-ollama-pc-03:
+    #   ansible_host: 192.168.0.102
+    #   ansible_port: 22
+    #   ansible_user: admin03
+    # wiezyczka-ollama-pc-04:
+    #   ansible_host: 192.168.0.103
+    #   ansible_port: 22
+    #   ansible_user: admin04
+    # wiezyczka-ollama-pc-05:
+    #   ansible_host: 192.168.0.104
+    #   ansible_port: 22
+    #   ansible_user: admin05

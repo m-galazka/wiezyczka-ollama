@@ -1,5 +1,5 @@
 ---
-- name: "Aktualizacja systemów operacyjnych"
+- name: "Przygotowanie środowiska wieżyczki ollama"
   hosts: all
   become: true
   gather_facts: true
@@ -9,4 +9,5 @@
   max_fail_percentage: 25
   roles:
     - aktualizacja_systemu_operacyjnego
-  tags: aktualizacja_so
+    - wylaczenie_partycji_wymiany
+    - konfiguracja_cgroups

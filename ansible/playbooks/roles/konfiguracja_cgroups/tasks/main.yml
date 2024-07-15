@@ -1,0 +1,13 @@
+---
+- name: "Pobierz zawartość /boot/firmware/cmdline.txt"
+  ansible.builtin.command: cat /boot/firmware/cmdline.txt
+  register: cmdline
+
+- name: "Konfiguracja cgroups, zmodyfikowanie pliku /boot/firmware/cmdline.txt"
+  ansible.builtin.lineinfile:
+    path: //boot/firmware/cmdline.txt
+    regexp: '^(.*)$'
+    line: '\1 cgroup_memory=1 cgroup_enable=memory'
+    backrefs: yes
+    state: present
+  when: "'cgroup_memory=1' not in cmdline.stdout"
