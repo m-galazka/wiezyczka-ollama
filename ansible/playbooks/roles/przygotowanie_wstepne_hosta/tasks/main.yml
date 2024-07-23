@@ -1,0 +1,6 @@
+---
+- name: "Utworzenie katalogu /files na hostach"
+  ansible.builtin.file:
+    path: /files
+    state: directory
+    mode: '0755'

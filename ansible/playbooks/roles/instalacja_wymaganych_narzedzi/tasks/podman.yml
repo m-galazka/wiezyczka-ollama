@@ -1,0 +1,4 @@
+- name: "Instalacja podman"
+  ansible.builtin.apt:
+    name: podman
+    state: present

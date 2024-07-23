@@ -1,0 +1,6 @@
+---
+- name: "Instalacja głównego serwera k3s"
+  ansible.builtin.command:
+    cmd: "/files/k3s-install.sh server --cluster-init --tls-san=192.168.0.101"
+  environment:
+    K3S_TOKEN: "SECRET"

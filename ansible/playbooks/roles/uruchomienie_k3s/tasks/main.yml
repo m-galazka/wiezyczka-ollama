@@ -1,0 +1,14 @@
+---
+- name: "Pobranie skryptu instalacyjnego k3s"
+  ansible.builtin.get_url:
+    url: https://get.k3s.io/
+    dest: /files/k3s-install.sh
+    mode: "0755"
+    
+- name: "Zainstaluj k3s"
+  include_tasks: "{{ id_hosta }}.yml"
+
+- name: "Dwu minutowa przerwa, oczekiwanie na główny serwer k3s"
+  pause:
+    seconds: 120
+  when: id_hosta == "serwer_master"

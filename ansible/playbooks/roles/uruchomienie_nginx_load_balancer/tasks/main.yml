@@ -1,0 +1,24 @@
+---
+- name: "Instalacja podman"
+  ansible.builtin.import_role:
+    name: instalacja_wymaganych_narzedzi
+    tasks_from: podman
+- name: "Pobranie obrazu nginx w wersji stabilnej"
+  become: false
+  containers.podman.podman_image:
+    name: docker.io/nginx:stable
+- name: "Skopiowanie pliku konfiguracyjnego nginxa do hosta"
+  copy:
+    src: files/nginx.conf
+    dest: "/files/nginx.conf"
+- name: "Uruchomienie kontenera z nginxem"
+  become: false
+  containers.podman.podman_container:
+    name: lb
+    image: docker.io/nginx:stable
+    state: started
+    detach: true
+    restart_policy: always
+    ports:
+      - 6443:6443
+    volumes: /files/nginx.conf:/etc/nginx/nginx.conf

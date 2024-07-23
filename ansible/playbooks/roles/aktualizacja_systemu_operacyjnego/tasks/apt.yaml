@@ -1,8 +1,9 @@
 ---
 - name: "Aktualizacja systemu operacyjnego"
   ansible.builtin.apt:
-    upgrade: dist
     update_cache: yes
+    cache_valid_time: 3600
+    upgrade: dist
 
 - name: "Aktualizacja wszystkich pakietów do najnowszej wersji"
   ansible.builtin.apt:
