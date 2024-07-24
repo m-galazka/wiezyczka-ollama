@@ -4,3 +4,7 @@
     path: /files
     state: directory
     mode: '0755'
+- name: "Instalacja podman"
+  ansible.builtin.import_role:
+    name: instalacja_wymaganych_narzedzi
+    tasks_from: podman

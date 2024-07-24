@@ -30,7 +30,7 @@
   hosts: load_balancer
   tags: uruchomienie_nginx_lb
   gather_facts: true
-  become: true
+  become: false
   roles:
     - uruchomienie_nginx_load_balancer
 
