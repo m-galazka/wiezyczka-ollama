@@ -1,6 +1,6 @@
 ---
 - name: "Instalacja serwera k3s"
   ansible.builtin.command:
-    cmd: "/files/k3s-install.sh server --server https://192.168.0.101:6443 --tls-san=192.168.0.101"
+    cmd: "~/files/k3s-install.sh server --server https://192.168.0.101:6443 --tls-san=192.168.0.101"
   environment:
     K3S_TOKEN: "SECRET"

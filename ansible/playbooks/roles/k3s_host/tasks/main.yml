@@ -1,0 +1,43 @@
+---
+- name: "Aktualizacja systemu operacyjnego"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: aktualizacja_apt_so
+
+- name: "Aktualizacja wszystkich pakietów"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: aktualizacja_apt_wszystkich_pakietow
+
+- name: "Wyłączenie partycji wymiany"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: wylaczenie_partycji_wymiany
+
+- name: "Konfiguracuja cgroups"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: konfiguracja_cgroups
+
+- name: "Restart hosta"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: restart_hosta
+
+- name: "Utworzenie ~/files"
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: utworzenie_katalogu_file_w_katalogu_domowym
+
+- name: "Pobranie skryptu instalacyjnego k3s"
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: pobranie_k3s_install_sh
+
+- name: "Zainstaluj k3s"
+  include_tasks: "{{ id_hosta }}.yml"

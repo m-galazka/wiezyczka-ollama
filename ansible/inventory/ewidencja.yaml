@@ -1,5 +1,5 @@
 ---
-load_balancer:
+lb_hosts:
   hosts:
     wiezyczka-ollama-pc-01:
       ansible_host: 192.168.0.100
@@ -7,17 +7,19 @@ load_balancer:
       ansible_user: ollama100
   vars:
     id_hosta: lb
-k3s_klaster:
+
+k3s_hosts:
   children:
-    serwer_master:
+    serwer_inicjalizujacy:
       hosts:
         wiezyczka-ollama-pc-02:
           ansible_host: 192.168.0.101
           ansible_port: 22
           ansible_user: ollama101
       vars:
-        id_hosta: serwer_master
-    serwer:
+        id_hosta: serwer_init
+
+    serwery:
       hosts:
         wiezyczka-ollama-pc-03:
           ansible_host: 192.168.0.102
@@ -29,7 +31,8 @@ k3s_klaster:
           ansible_user: ollama103
       vars:
         id_hosta: serwer
-    agent:
+
+    agenty:
       hosts:
         wiezyczka-ollama-pc-05:
           ansible_host: 192.168.0.104

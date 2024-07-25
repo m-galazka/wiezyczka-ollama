@@ -1,6 +1,7 @@
 ---
 - name: "Wyłączenie wszystkich urządzeń wymiany"
   ansible.builtin.command: swapoff -a
+
 - name: "Wyłączenie partycji wymiany w dphys-swapfile"
   ansible.builtin.replace:
     path: /etc/dphys-swapfile

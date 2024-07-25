@@ -1,51 +1,26 @@
 ---
-- name: "Przygotowanie hosta load balancera"
-  hosts: load_balancer
-  tags: przygotowanie_hosta_lb
+- name: "Uruchomienie lb_host"
+  hosts: lb_hosts
   gather_facts: true
-  become: true
   serial:
     - 1
   roles:
-    - przygotowanie_wstepne_hosta
-    - aktualizacja_systemu_operacyjnego
+    - lb_host
 
-- name: "Przygotowanie hostów klastra k3s"
-  hosts: k3s_klaster
-  tags: przygotowanie_hosta_k3s
+- name: "Uruchomienie serwera inicjalizujacego"
+  hosts: serwer_inicjalizujacy
   gather_facts: true
-  become: true
+  serial:
+    - 1
+  roles:
+    - serwer_inicjalizujacy
+
+- name: "Uruchomienie k3s_host"
+  hosts: k3s_hosts:!serwer_inicjalizujacy
+  gather_facts: true
   serial:
     - 1
     - 5
   max_fail_percentage: 25
   roles:
-    - przygotowanie_wstepne_hosta
-    - aktualizacja_systemu_operacyjnego
-    - wylaczenie_partycji_wymiany
-    - konfiguracja_cgroups
-    - restart_hosta
-    
-- name: "Uruchomienie Nginx Load Balancer"
-  hosts: load_balancer
-  tags: uruchomienie_nginx_lb
-  gather_facts: true
-  become: false
-  roles:
-    - uruchomienie_nginx_load_balancer
-
-- name: "Uruchomienie głównego serwera k3s"
-  hosts: serwer_master
-  tags: uruchomienie_glownego_serwera_k3s
-  gather_facts: true
-  become: true
-  roles:
-    - uruchomienie_k3s
-
-- name: "Uruchomienie k3s"
-  hosts: k3s_klaster:!serwer_master
-  tags: uruchomienie_k3s_na_hostach
-  gather_facts: true
-  become: true
-  roles:
-    - uruchomienie_k3s
+    - k3s_host

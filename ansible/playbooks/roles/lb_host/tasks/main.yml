@@ -1,0 +1,84 @@
+---
+- name: "Aktualizacja systemu operacyjnego"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: aktualizacja_apt_so
+
+- name: "Aktualizacja wszystkich pakietów"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: aktualizacja_apt_wszystkich_pakietow
+
+- name: "Utworzenie ~/files"
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: utworzenie_katalogu_file_w_katalogu_domowym
+
+- name: "Odblokowanie portu 80"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: odblokowanie_portu_80_dla_zwyklego_uzytkownika
+
+- name: "PODMAN: Instalacja podman"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: instalacja_apt_podman
+
+- name: "PODMAN: Pobranie obrazu nginx w wersji stabilnej"
+  containers.podman.podman_image:
+    name: docker.io/nginx:stable
+
+- name: "Skopiowanie pliku konfiguracyjnego nginxa do hosta"
+  copy:
+    src: files/nginx.conf
+    dest: "~/files/nginx.conf"
+
+- name: "PODMAN: Uruchomienie kontenera z nginxem"
+  containers.podman.podman_container:
+    name: lb_host
+    image: docker.io/nginx:stable
+    state: started
+    detach: true
+    restart_policy: always
+    ports:
+      - 6443:6443
+      - 80:80
+    volumes: "{{ ansible_env.HOME }}/files/nginx.conf:/etc/nginx/nginx.conf"
+
+- name: "Utworzenie katalogu ~/.config/systemd/user/"
+  ansible.builtin.file:
+    path: ~/.config/systemd/user/
+    state: directory
+    mode: '0755'
+
+- name: "Stworzenie serwisu dla kontenera lb_host"
+  containers.podman.podman_generate_systemd:
+    name: lb_host
+    new: true
+    no_header: true
+    dest: "~/.config/systemd/user/"
+
+- name: "Przeładuj systemd dla zwykłych użytkowników"
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    scope: user
+
+- name: "Uruchomienie serwisu container-lb_host"
+  ansible.builtin.systemd_service:
+    name: container-lb_host
+    state: started
+    enabled: true
+    scope: user
+
+- name: "Uruchomienie serwisów użytkownika przy starcie systemu"
+  ansible.builtin.command: loginctl enable-linger
+
+- name: "Restart hosta"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: restart_hosta
