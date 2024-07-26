@@ -24,4 +24,4 @@ Krok 2. Uruchomienie scenariusza ansible
 
 Po pomyślnym wykonaniu scenariusza, wszystkie hosty zostaną automatycznie przygotowane.
 Zostanie uruchomiony serwer ollama oraz open webui jako klient z obsługą serwera ollama.
-Open webui będzie dostępny pod adresem "http://<adres ip lb_host>:80"
+Open webui będzie dostępny pod adresem "http://[adres_ip_lb_host]:80"
