@@ -40,3 +40,9 @@ k3s_hosts:
           ansible_user: ollama104
       vars:
         id_hosta: agent
+
+all:
+  vars:
+    ip_lb_host: "192.168.0.100"
+    ip_serwer_inicjalizujacy: "192.168.0.101"
+    port_k3s_http: "30080"

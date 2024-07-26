@@ -11,7 +11,7 @@
     name: wspoldzielone
     tasks_from: aktualizacja_apt_wszystkich_pakietow
 
-- name: "Utworzenie ~/files"
+- name: "Utworzenie katalogu files w katalogu domowym"
   ansible.builtin.import_role:
     name: wspoldzielone
     tasks_from: utworzenie_katalogu_file_w_katalogu_domowym
@@ -33,9 +33,9 @@
     name: docker.io/nginx:stable
 
 - name: "Skopiowanie pliku konfiguracyjnego nginxa do hosta"
-  copy:
-    src: files/nginx.conf
-    dest: "~/files/nginx.conf"
+  ansible.builtin.template:
+    src: templates/nginx.conf.j2
+    dest: "{{ ansible_env.HOME }}/files/nginx.conf"
 
 - name: "PODMAN: Uruchomienie kontenera z nginxem"
   containers.podman.podman_container:
@@ -51,7 +51,7 @@
 
 - name: "Utworzenie katalogu ~/.config/systemd/user/"
   ansible.builtin.file:
-    path: ~/.config/systemd/user/
+    path: "{{ ansible_env.HOME }}/.config/systemd/user/"
     state: directory
     mode: '0755'
 
@@ -60,7 +60,7 @@
     name: lb_host
     new: true
     no_header: true
-    dest: "~/.config/systemd/user/"
+    dest: "{{ ansible_env.HOME }}/.config/systemd/user/"
 
 - name: "Przeładuj systemd dla zwykłych użytkowników"
   ansible.builtin.systemd_service:

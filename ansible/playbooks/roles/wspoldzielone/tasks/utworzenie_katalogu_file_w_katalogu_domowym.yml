@@ -1,6 +1,6 @@
 ---
-- name: "Utworzenie katalogu ~/files"
+- name: "Utworzenie katalogu files w katalogu domowym"
   ansible.builtin.file:
-    path: ~/files
+    path: "{{ ansible_env.HOME }}/files"
     state: directory
     mode: '0755'

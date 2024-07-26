@@ -1,6 +1,6 @@
 ---
 - name: "Instalacja agenta k3s"
   ansible.builtin.command:
-    cmd: "~/files/k3s-install.sh agent --server https://192.168.0.100:6443"
+    cmd: "{{ ansible_env.HOME }}/files/k3s-install.sh agent --server https://{{ ip_lb_host }}:6443"
   environment:
     K3S_TOKEN: "SECRET"

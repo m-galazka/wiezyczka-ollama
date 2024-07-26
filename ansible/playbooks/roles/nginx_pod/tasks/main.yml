@@ -1,0 +1,18 @@
+---
+- name: "Skopiowanie manifestu obiektu deploy do folderu files/nginx-k3s-files"
+  copy:
+    src: files/nginx-k3s-files/nginx-deploy.yaml
+    dest: "{{ ansible_env.HOME }}/files/nginx-k3s-files/nginx-deploy.yaml"
+
+- name: "Skopiowanie manifestu obiektu svc do folderu files/nginx-k3s-files"
+  ansible.builtin.template:
+    src: templates/nginx-k3s-files/nginx-svc.yaml.j2
+    dest: "{{ ansible_env.HOME }}/files/nginx-k3s-files/nginx-svc.yaml"
+
+- name: "Wysłanie manifestu nginx-deploy"
+  become: true
+  ansible.builtin.command: "kubectl apply -f {{ ansible_env.HOME }}/files/nginx-k3s-files/nginx-deploy.yaml"
+
+- name: "Wysłanie manifestu nginx-svc"
+  become: true
+  ansible.builtin.command: "kubectl apply -f {{ ansible_env.HOME }}/files/nginx-k3s-files/nginx-svc.yaml"

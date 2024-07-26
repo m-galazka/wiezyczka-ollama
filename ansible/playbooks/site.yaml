@@ -24,3 +24,11 @@
   max_fail_percentage: 25
   roles:
     - k3s_host
+
+- name: "Uruchomienie ollamy i open webui na k3s"
+  hosts: k3s_hosts:!agenty
+  gather_facts: true
+  run_once: true
+  tags: startpods
+  roles:
+    - k3s

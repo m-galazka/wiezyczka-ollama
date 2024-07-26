@@ -2,5 +2,5 @@
 - name: "Pobranie skryptu instalacyjnego k3s"
   ansible.builtin.get_url:
     url: https://get.k3s.io/
-    dest: ~/files/k3s-install.sh
+    dest: "{{ ansible_env.HOME }}/files/k3s-install.sh"
     mode: "0755"

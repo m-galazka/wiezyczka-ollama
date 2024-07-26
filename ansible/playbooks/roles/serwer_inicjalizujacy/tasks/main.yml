@@ -29,7 +29,7 @@
     name: wspoldzielone
     tasks_from: restart_hosta
 
-- name: "Utworzenie ~/files"
+- name: "Utworzenie katalogu files w katalogu domowym"
   ansible.builtin.import_role:
     name: wspoldzielone
     tasks_from: utworzenie_katalogu_file_w_katalogu_domowym
@@ -41,7 +41,7 @@
 
 - name: "Instalacja głównego serwera k3s"
   ansible.builtin.command:
-    cmd: "~/files/k3s-install.sh server --cluster-init --tls-san=192.168.0.101"
+    cmd: "{{ ansible_env.HOME }}/files/k3s-install.sh server --cluster-init --tls-san={{ ip_serwer_inicjalizujacy }}"
   environment:
     K3S_TOKEN: "SECRET"
 

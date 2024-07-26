@@ -1,0 +1,30 @@
+---
+- name: "Skopiowanie manifestów do katalogu files/k3s_files"
+  copy:
+    src: files/k3s-files
+    dest: "{{ ansible_env.HOME }}/files/"
+
+- name: "Skopiowanie manifestu serwisu openwebui do katalogu files/k3s_files"
+  ansible.builtin.template:
+    src: templates/k3s-files/openwebui-svc.yaml.j2
+    dest: "{{ ansible_env.HOME }}/files/k3s-files/openwebui-svc.yaml"
+
+- name: "Wysłanie manifestu k3s-ns"
+  become: true
+  ansible.builtin.command: "kubectl apply -f {{ ansible_env.HOME }}/files/k3s-files/k3s-ns.yaml"
+
+- name: "Wysłanie manifestu ollama-deploy"
+  become: true
+  ansible.builtin.command: "kubectl apply -f {{ ansible_env.HOME }}/files/k3s-files/ollama-deploy.yaml"
+
+- name: "Wysłanie manifestu ollama-svc"
+  become: true
+  ansible.builtin.command: "kubectl apply -f {{ ansible_env.HOME }}/files/k3s-files/ollama-svc.yaml"
+
+- name: "Wysłanie manifestu openwebui-deploy"
+  become: true
+  ansible.builtin.command: "kubectl apply -f {{ ansible_env.HOME }}/files/k3s-files/openwebui-deploy.yaml"
+
+- name: "Wysłanie manifestu openwebui-svc"
+  become: true
+  ansible.builtin.command: "kubectl apply -f {{ ansible_env.HOME }}/files/k3s-files/openwebui-svc.yaml"
