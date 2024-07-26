@@ -4,12 +4,10 @@ Projekt ma na celu utworzenie klastra k3s na którym zostanie uruchomiony serwer
 
 # Użyta infrastruktura
 
-5 x Raspberry Pi 4
-    - 1 x Raspberry Pi 4 jako Load balancer. 
-                    Ze względu na ograniczoną ilość raspberry pi,
-                    load balancer utworzony przy pomocy nginxa i tylko na jednym hoście (brak wysokiej dostępności)
-    - 3 x Raspberry Pi 4 jako Control Plane (zapewnienie wysokiej dostępności)
-    - 1 x Raspberry Pi 4 jako Agent
+5 x Raspberry Pi 4:
+  - 1 x Raspberry Pi 4 jako Load balancer. Ze względu na ograniczoną ilość raspberry pi, load balancer utworzony przy pomocy nginxa i tylko na jednym hoście (brak wysokiej dostępności)
+  - 3 x Raspberry Pi 4 jako Control Plane (zapewnienie wysokiej dostępności)
+  - 1 x Raspberry Pi 4 jako Agent
 
 # Opis realizacji projektu
 
