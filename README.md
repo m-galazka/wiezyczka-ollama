@@ -13,9 +13,9 @@ Projekt ma na celu utworzenie klastra k3s na którym zostanie uruchomiony serwer
 
 Krok 1. Przygotowanie Raspberry Pi 4:
   - Zainstalowanie systemu operacyjnego (Raspberry pi os lite(64-bit)) przy pomocy Raspberry Pi Imager
-    + Ustawienie dla każdego hosta indywidualnego hostname
-    + Ustawienie dla każdego hosta indywidualnego loginu i hasła
-    + Skonfigurowanie połączenia SSH
+    - Ustawienie dla każdego hosta indywidualnego hostname
+    - Ustawienie dla każdego hosta indywidualnego loginu i hasła
+    - Skonfigurowanie połączenia SSH
   - Przypisanie indywidualnego adresu IP dla każdego hosta
 
 Krok 2. Uruchomienie scenariusza ansible
