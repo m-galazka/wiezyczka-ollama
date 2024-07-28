@@ -6,7 +6,7 @@ metadata:
 spec:
   strategy:
     type: Recreate
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: ollama
@@ -33,4 +33,13 @@ spec:
             memory: {{ ollama_limit_mem }}
         ports:
         - containerPort: 11434
+        volumeMounts:
+        - name: nfs-volume
+          mountPath: /root/.ollama
         tty: true
+      volumes:
+        - name: nfs-volume
+          nfs:
+            server: {{ nfs_serwer_ip }}
+            path: {{ nfs_serwer_path }}
+            readOnly: no

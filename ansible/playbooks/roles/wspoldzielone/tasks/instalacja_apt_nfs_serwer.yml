@@ -1,0 +1,5 @@
+---
+- name: "Instalacja nfs serwer"
+  ansible.builtin.apt:
+    name: nfs-server
+    state: present

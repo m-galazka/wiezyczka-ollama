@@ -5,9 +5,9 @@ Projekt ma na celu utworzenie klastra k3s na którym zostanie uruchomiony serwer
 # Użyta infrastruktura
 
 5 x Raspberry Pi 4:
-  - 1 x Raspberry Pi 4 jako Load balancer. Ze względu na ograniczoną ilość raspberry pi, load balancer utworzony przy pomocy nginxa i tylko na jednym hoście (brak wysokiej dostępności)
-  - 3 x Raspberry Pi 4 jako Control Plane (zapewnienie wysokiej dostępności)
-  - 1 x Raspberry Pi 4 jako Agent
+  - 1 x Raspberry Pi 4 jako Load balancer i serwer nfs. Ze względu na ograniczoną ilość raspberry pi, load balancer utworzony przy pomocy nginxa i tylko na jednym hoście (brak wysokiej dostępności).
+  - 3 x Raspberry Pi 4 jako Control Plane (zapewnienie wysokiej dostępności) z obsługą dwóch instancji ollama.
+  - 1 x Raspberry Pi 4 jako Agent z obsługą instancji openwebui.
 
 # Opis realizacji projektu
 
@@ -23,5 +23,5 @@ Krok 2. Uruchomienie scenariusza ansible
   - Następnie uruchom scenariusz site.yaml
 
 Po pomyślnym wykonaniu scenariusza, wszystkie hosty zostaną automatycznie przygotowane.
-Zostanie uruchomiony serwer ollama oraz open webui jako klient z obsługą serwera ollama.
+Zostanie uruchomiony serwer ollama w dwóch instancjach oraz open webui jako klient z obsługą serwerów ollama.
 Open webui będzie dostępny pod adresem "http://[adres_ip_lb_host]:80"

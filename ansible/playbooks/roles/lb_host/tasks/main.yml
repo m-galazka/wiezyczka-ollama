@@ -16,6 +16,24 @@
     name: wspoldzielone
     tasks_from: utworzenie_katalogu_file_w_katalogu_domowym
 
+- name: "Instalacja nfs serwer"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: instalacja_apt_nfs_serwer
+
+- name: "Utworzenie katalogu data dla serwera nfs"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: utworzenie_katalogu_data
+
+- name: "Konfiguracja serwera nfs"
+  become: true
+  ansible.builtin.import_role:
+    name: wspoldzielone
+    tasks_from: konfiguracja_serwera_nfs
+
 - name: "Odblokowanie portu 80"
   become: true
   ansible.builtin.import_role:

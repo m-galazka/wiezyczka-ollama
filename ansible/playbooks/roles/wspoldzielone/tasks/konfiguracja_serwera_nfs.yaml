@@ -1,0 +1,15 @@
+---
+- name: "Skonfigurowanie serwera nfs"
+  ansible.builtin.lineinfile:
+    path: /etc/exports
+    line: "/data *(rw,no_subtree_check,no_root_squash)"
+    create: yes
+
+- name: "Właczenie usługi serwera nfs"
+  ansible.builtin.systemd_service:
+    name: nfs-server
+    enabled: true
+    state: started
+
+- name: "Uaktualnie wpisów nfs serwer"
+  ansible.builtin.command: exportfs -ar

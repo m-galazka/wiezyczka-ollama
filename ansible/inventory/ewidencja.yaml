@@ -46,6 +46,8 @@ all:
     ip_lb_host: "192.168.0.100"
     ip_serwer_inicjalizujacy: "192.168.0.101"
     port_k3s_http: "30080"
+    nfs_serwer_ip: "192.168.0.100"
+    nfs_serwer_path: "/data"
     hostname_node_ollama_1: "wiezyczka-ollama-pc-03"
     hostname_node_ollama_2: "wiezyczka-ollama-pc-04"
     hostname_node_openwebui_1: "wiezyczka-ollama-pc-05"
