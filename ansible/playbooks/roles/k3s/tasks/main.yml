@@ -4,6 +4,16 @@
     src: files/k3s-files
     dest: "{{ ansible_env.HOME }}/files/"
 
+- name: "Skopiowanie manifestu deploy ollama do katalogu files/k3s_files"
+  ansible.builtin.template:
+    src: templates/k3s-files/ollama-deploy.yaml.j2
+    dest: "{{ ansible_env.HOME }}/files/k3s-files/ollama-deploy.yaml"
+
+- name: "Skopiowanie manifestu deploy openwebui do katalogu files/k3s_files"
+  ansible.builtin.template:
+    src: templates/k3s-files/openwebui-deploy.yaml.j2
+    dest: "{{ ansible_env.HOME }}/files/k3s-files/openwebui-deploy.yaml"
+
 - name: "Skopiowanie manifestu serwisu openwebui do katalogu files/k3s_files"
   ansible.builtin.template:
     src: templates/k3s-files/openwebui-svc.yaml.j2

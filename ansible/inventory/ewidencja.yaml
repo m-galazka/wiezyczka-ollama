@@ -46,3 +46,8 @@ all:
     ip_lb_host: "192.168.0.100"
     ip_serwer_inicjalizujacy: "192.168.0.101"
     port_k3s_http: "30080"
+    hostname_node_ollama_1: "wiezyczka-ollama-pc-03"
+    hostname_node_ollama_2: "wiezyczka-ollama-pc-04"
+    hostname_node_openwebui_1: "wiezyczka-ollama-pc-05"
+    ollama_limit_mem: "800Mi" # Model: tinyllama:1.1b-chat-v0.6-q2_K
+    openwebui_limit_mem: "800Mi"

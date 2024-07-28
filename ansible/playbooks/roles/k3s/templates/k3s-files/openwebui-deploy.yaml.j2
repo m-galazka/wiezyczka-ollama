@@ -15,9 +15,21 @@ spec:
       labels:
         app: openwebui
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - {{ hostname_node_openwebui_1 }}
       containers:
       - name: openwebui
         image: ghcr.io/open-webui/open-webui:main
+        resources:
+          limits:
+            memory: {{ openwebui_limit_mem }}
         ports:
         - containerPort: 8080
         env:

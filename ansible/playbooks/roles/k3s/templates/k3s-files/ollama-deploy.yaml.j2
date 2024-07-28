@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ollama-deploy
+  namespace: k3s
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ollama
+  template:
+    metadata:
+      labels:
+        app: ollama
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - {{ hostname_node_ollama_1 }}
+                - {{ hostname_node_ollama_2 }}
+      containers:
+      - name: ollama
+        image: ollama/ollama:latest
+        resources:
+          limits:
+            memory: {{ ollama_limit_mem }}
+        ports:
+        - containerPort: 11434
+        tty: true
