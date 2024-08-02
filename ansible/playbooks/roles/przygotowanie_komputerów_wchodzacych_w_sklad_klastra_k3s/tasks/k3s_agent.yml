@@ -1,0 +1,6 @@
+---
+- name: "Instalacja agenta k3s"
+  ansible.builtin.command:
+    cmd: "{{ ansible_env.HOME }}/files/k3s-install.sh agent --server https://{{ load_balancer_ip }}:6443 --node-label przeznaczenie={{ przeznaczony_dla_aplikacji }}"
+  environment:
+    K3S_TOKEN: "SECRET"

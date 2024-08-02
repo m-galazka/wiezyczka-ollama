@@ -1,4 +1,4 @@
 ---
-- name: "Restart hosta"
+- name: "Restart komputera"
   ansible.builtin.reboot:
     reboot_timeout: 3600

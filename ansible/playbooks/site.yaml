@@ -1,34 +1,38 @@
 ---
-- name: "Uruchomienie lb_host"
-  hosts: lb_hosts
-  gather_facts: true
-  serial:
-    - 1
-  roles:
-    - lb_host
-
-- name: "Uruchomienie serwera inicjalizujacego"
-  hosts: serwer_inicjalizujacy
-  gather_facts: true
-  serial:
-    - 1
-  roles:
-    - serwer_inicjalizujacy
-
-- name: "Uruchomienie k3s_host"
-  hosts: k3s_hosts:!serwer_inicjalizujacy
+- name: "Przygotowanie komputerów pod load balancer"
+  hosts: load_balancery
   gather_facts: true
   serial:
     - 1
     - 5
   max_fail_percentage: 25
   roles:
-    - k3s_host
+    - przygotowanie_komputerow_pod_load_balancer
 
-- name: "Uruchomienie ollamy i open webui na k3s"
-  hosts: k3s_hosts:!agenty
+- name: "Przygotowanie komputera pod serwer inicjalizujacy klaster K3s"
+  hosts: k3s_serwer_inicjalizujacy
+  gather_facts: true
+  serial:
+    - 1
+    - 5
+  max_fail_percentage: 25
+  roles:
+    - przygotowanie_komputera_pod_serwer_inicjalizujacy_klaster_k3s
+
+- name: "Przygotownie komputerów wchodzących w skład klastra K3s"
+  hosts: klaster_k3s:!k3s_serwer_inicjalizujacy
+  gather_facts: true
+  serial:
+    - 1
+    - 5
+  max_fail_percentage: 25
+  roles:
+    - przygotowanie_komputerów_wchodzacych_w_sklad_klastra_k3s
+
+- name: "Wdrożenie aplikacji na klaster K3s"
+  hosts: klaster_k3s:!k3s_agenty
   gather_facts: true
   run_once: true
-  tags: startpods
+  tags: k3s_wyslanie_manifestow
   roles:
-    - k3s
+    - wdrozenie_aplikacji_na_klaster_k3s

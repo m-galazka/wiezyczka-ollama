@@ -1,55 +1,82 @@
 ---
-lb_hosts:
+# Grupa przeznaczona dla komputerów wchodzących w skład load balancerów
+# Hosty w tej grupie nie przynależą do klastra K3s
+load_balancery:
   hosts:
     wiezyczka-ollama-pc-01:
       ansible_host: 192.168.0.100
       ansible_port: 22
       ansible_user: ollama100
   vars:
-    id_hosta: lb
+    rola_komputera: load_balancer
 
-k3s_hosts:
+# Grupa przeznaczona dla komputerów wchodzących w skład klastra K3s
+klaster_k3s:
   children:
-    serwer_inicjalizujacy:
+    # Komputer inicjalizujący klaster K3s
+    k3s_serwer_inicjalizujacy:
       hosts:
         wiezyczka-ollama-pc-02:
           ansible_host: 192.168.0.101
           ansible_port: 22
           ansible_user: ollama101
+          # Zmienna określa jaka aplikacja zostanie uruchomiona na węźle
+          # Do wyboru: ollama, openwebui
+          przeznaczony_dla_aplikacji: controlplane
       vars:
-        id_hosta: serwer_init
-
-    serwery:
+        rola_komputera: k3s_serwer_inicjalizujacy
+    # Komputery przeznaczone do uruchomienia K3s w trybie serwera
+    k3s_serwery:
       hosts:
         wiezyczka-ollama-pc-03:
           ansible_host: 192.168.0.102
           ansible_port: 22
           ansible_user: ollama102
+          # Zmienna określa jaka aplikacja zostanie uruchomiona na węźle
+          # Do wyboru: ollama, openwebui
+          przeznaczony_dla_aplikacji: ollama
         wiezyczka-ollama-pc-04:
           ansible_host: 192.168.0.103
           ansible_port: 22
           ansible_user: ollama103
+          # Zmienna określa jaka aplikacja zostanie uruchomiona na węźle
+          # Do wyboru: ollama, openwebui
+          przeznaczony_dla_aplikacji: ollama
       vars:
-        id_hosta: serwer
-
-    agenty:
+        rola_komputera: k3s_serwer
+    # Komputery przeznaczone do uruchomienia K3s w trybie agenta
+    k3s_agenty:
       hosts:
         wiezyczka-ollama-pc-05:
           ansible_host: 192.168.0.104
           ansible_port: 22
           ansible_user: ollama104
+          # Zmienna określa jaka aplikacja zostanie uruchomiona na węźle
+          # Do wyboru: ollama, openwebui
+          przeznaczony_dla_aplikacji: openwebui
       vars:
-        id_hosta: agent
+        rola_komputera: k3s_agent
 
 all:
   vars:
-    ip_lb_host: "192.168.0.100"
-    ip_serwer_inicjalizujacy: "192.168.0.101"
-    port_k3s_http: "30080"
+    # Lista IP potrzebna do konfiguracji klastra
+    load_balancer_ip: "192.168.0.100"
+    serwer_inicjalizujacy_ip: "192.168.0.101"
+
+    # Port na którym została wystawiona aplikacja Open WebUI na węzłach
+    port_wezla_wystawiony_dla_open_webui: "30080"
+
+    # IP do komputera na którym został uruchomiony serwer nfs
     nfs_serwer_ip: "192.168.0.100"
+    # Udostępniony katalog przez serwer nfs
     nfs_serwer_path: "/data"
-    hostname_node_ollama_1: "wiezyczka-ollama-pc-03"
-    hostname_node_ollama_2: "wiezyczka-ollama-pc-04"
-    hostname_node_openwebui_1: "wiezyczka-ollama-pc-05"
-    ollama_limit_mem: "800Mi" # Model: tinyllama:1.1b-chat-v0.6-q2_K
+
+    # Liczba instancji aplikacji Ollama
+    ollama_replicas: "2"
+    # Liczba instancji aplikacji Open WebUi
+    open_webui_replicas: "1"
+
+    # Limit na pamięć RAM dla aplikacji Ollama
+    ollama_limit_mem: "800Mi" # Model dla Raspberry pi 2GB: tinyllama:1.1b-chat-v0.6-q2_K
+    # Limit na pamięć RAM dla aplikacji Open WebUI
     openwebui_limit_mem: "800Mi"

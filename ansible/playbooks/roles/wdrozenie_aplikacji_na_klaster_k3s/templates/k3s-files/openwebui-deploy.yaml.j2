@@ -6,7 +6,7 @@ metadata:
 spec:
   strategy:
     type: Recreate
-  replicas: 1
+  replicas: {{ open_webui_replicas }}
   selector:
     matchLabels:
       app: openwebui
@@ -20,10 +20,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: kubernetes.io/hostname
+              - key: przeznaczenie
                 operator: In
                 values:
-                - {{ hostname_node_openwebui_1 }}
+                - openwebui
       containers:
       - name: openwebui
         image: ghcr.io/open-webui/open-webui:main

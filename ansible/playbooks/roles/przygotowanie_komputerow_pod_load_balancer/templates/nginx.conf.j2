@@ -1,0 +1,25 @@
+events {}
+
+stream {
+  upstream k3s_servers {
+    server 192.168.0.101:6443;
+    server 192.168.0.102:6443;
+    server 192.168.0.103:6443;
+  }
+
+  upstream k3s_http_openwebui {
+    server 192.168.0.101:{{ port_wezla_wystawiony_dla_open_webui }};
+    server 192.168.0.102:{{ port_wezla_wystawiony_dla_open_webui }};
+    server 192.168.0.103:{{ port_wezla_wystawiony_dla_open_webui }};
+  }
+
+  server {
+    listen 6443;
+    proxy_pass k3s_servers;
+  }
+
+  server {
+    listen 80;
+    proxy_pass k3s_http_openwebui;
+  }
+}

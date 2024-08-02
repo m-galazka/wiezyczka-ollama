@@ -3,13 +3,13 @@
   become: true
   ansible.builtin.import_role:
     name: wspoldzielone
-    tasks_from: aktualizacja_apt_so
+    tasks_from: apt_aktualizacja_systemu_operacyjnego
 
 - name: "Aktualizacja wszystkich pakietów"
   become: true
   ansible.builtin.import_role:
     name: wspoldzielone
-    tasks_from: aktualizacja_apt_wszystkich_pakietow
+    tasks_from: apt_aktualizacja_wszystkich_pakietow
 
 - name: "Wyłączenie partycji wymiany"
   become: true
@@ -17,17 +17,17 @@
     name: wspoldzielone
     tasks_from: wylaczenie_partycji_wymiany
 
-- name: "Konfiguracuja cgroups"
+- name: "Konfiguracja cgroups"
   become: true
   ansible.builtin.import_role:
     name: wspoldzielone
     tasks_from: konfiguracja_cgroups
 
-- name: "Restart hosta"
+- name: "Restart komputera"
   become: true
   ansible.builtin.import_role:
     name: wspoldzielone
-    tasks_from: restart_hosta
+    tasks_from: restart_komputera
 
 - name: "Utworzenie katalogu files w katalogu domowym"
   ansible.builtin.import_role:
@@ -39,5 +39,12 @@
     name: wspoldzielone
     tasks_from: pobranie_k3s_install_sh
 
-- name: "Zainstaluj k3s"
-  include_tasks: "{{ id_hosta }}.yml"
+- name: "Instalacja głównego serwera k3s"
+  ansible.builtin.command:
+    cmd: "{{ ansible_env.HOME }}/files/k3s-install.sh server --cluster-init --tls-san={{ serwer_inicjalizujacy_ip }} --node-label przeznaczenie={{ przeznaczony_dla_aplikacji }}"
+  environment:
+    K3S_TOKEN: "SECRET"
+
+- name: "Dwu minutowa przerwa, oczekiwanie na główny serwer k3s"
+  pause:
+    seconds: 120

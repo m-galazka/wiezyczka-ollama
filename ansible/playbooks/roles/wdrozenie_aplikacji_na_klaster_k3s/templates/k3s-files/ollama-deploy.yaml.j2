@@ -6,7 +6,7 @@ metadata:
 spec:
   strategy:
     type: Recreate
-  replicas: 2
+  replicas: {{ ollama_replicas }}
   selector:
     matchLabels:
       app: ollama
@@ -20,11 +20,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: kubernetes.io/hostname
+              - key: przeznaczenie
                 operator: In
                 values:
-                - {{ hostname_node_ollama_1 }}
-                - {{ hostname_node_ollama_2 }}
+                - ollama
       containers:
       - name: ollama
         image: ollama/ollama:latest
