@@ -26,7 +26,7 @@ spec:
                 - openwebui
       containers:
       - name: openwebui
-        image: ghcr.io/open-webui/open-webui:main
+        image: ghcr.io/open-webui/open-webui:{{ openwebui_tag }}
         resources:
           limits:
             memory: {{ openwebui_limit_mem }}

@@ -80,3 +80,8 @@ all:
     ollama_limit_mem: "800Mi" # Model dla Raspberry pi 2GB: tinyllama:1.1b-chat-v0.6-q2_K
     # Limit na pamięć RAM dla aplikacji Open WebUI
     openwebui_limit_mem: "800Mi"
+
+    # Tag obrazu ollama
+    ollama_tag: "0.3.3"
+    # Tag obrazu open webui
+    openwebui_tag: "v0.3.10"

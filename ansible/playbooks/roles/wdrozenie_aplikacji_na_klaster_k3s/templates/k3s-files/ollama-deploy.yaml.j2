@@ -26,7 +26,7 @@ spec:
                 - ollama
       containers:
       - name: ollama
-        image: ollama/ollama:latest
+        image: ollama/ollama:{{ ollama_tag }}
         resources:
           limits:
             memory: {{ ollama_limit_mem }}
